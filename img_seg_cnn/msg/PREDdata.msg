@@ -1,0 +1,12 @@
+Header header
+int32[2] box_1
+int32[2] box_2
+int32[2] box_3
+int32[2] box_4
+int32 cX
+int32 cY
+float32 alpha
+float32 sigma
+float32 sigma_square
+float32 sigma_square_log
+time stamp
