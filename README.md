@@ -1,4 +1,4 @@
-# Image_segmentation_ROS_implementation
+# Image segmentation algorithm ROS implementation
 This is a ROS package consisting of a set of packages running a trained NN for the coastline detection through the ZED stereocamera inside a simulator's synthetic environment.
 
 
@@ -58,3 +58,30 @@ $ >>>
 If everything succesful you can check your python 3 virtual environment running the image-segmentation-keras tutorial (https://github.com/divamgupta/image-segmentation-keras) with the dataset given from the framework. It takes about 4-6 hours (depending on the PC's we have tested till this day) so you can leave at night. If all the predictions are ok then your python 3 virtual environment is ready for use.
 
 The setup of the ecatkin_ws ROS workspace will be given below.
+```
+$ mkdir -p ~/ecatkins_ws/src
+$ cd ~/ecatkin_ws
+$ pip3 install numpy
+$ pip3 install scipy matplotlib pillow
+$ pip3 install imutils h5py==2.10.0 requests progressbar2
+$ pip3 install cython
+$ pip3 install scikit-learn scikit-build scikit-image
+$ pip3 install opencv-contrib-python==4.4.0.46
+$ pip3 install opencv-python==4.4.0.42
+$ pip3 install rospkg empy
+$ cd src
+$ git clone https://github.com/OTL/cv_camera.git
+$ git clone -b melodic-devel https://github.com/ros/geometry2.git
+$ git clone https://github.com/ros-perception/image_common.git
+$ git clone https://github.com/amc-nu/RosImageFolderPublisher.git
+$ git clone -b melodic https://github.com/ros-perception/vision_opencv.git
+$ catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
+```
+Now you can move all the ecatkin_ws content from the repo to the src directory of the ecatkin_ws you just created and build.
+Then you execute the commands below:
+```
+$ cd ~/ecatkin_ws
+$ rosdep install --from-paths src --ignore-src -r -y
+$ catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
+$ source devel/setup.bash
+```
