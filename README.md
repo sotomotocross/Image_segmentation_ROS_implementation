@@ -2,6 +2,7 @@
 This is a ROS package utilizing a trained CNN for coastline detection through a ZED stereo camera inside the UAV simulator synthetic environment presented in https://github.com/sotomotocross/UAV_simulator_ArduCopter.git
 
 The CNN implemented on the present ROS package is trained according to the pipeline https://github.com/sotomotocross/coast_cnn_based_detection_pipeline.git
+The weights/checkpoints used in here are trained utilizing synthetic data from the simulator with the aforementioned pipeline.
 
 ## The ROS workspace setup
 You have to create a separate catkin_ws to run the present package with the trained CNN. This ROS worskpace needs to be build and run using Python3. For this reason the user has to setup a python3 virtual environment and installing a set of dependencies inside. Also if you are an NVIDIA user then you have to check the CUDA versions, and cuDNN. Else you will be running the NN prediction on your CPU (either way the payload to the computer is heavy but GPU acceleration helps a lot).
