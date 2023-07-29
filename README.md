@@ -1,11 +1,9 @@
 # Image segmentation algorithm ROS implementation
-This is a ROS package consisting of a set of packages running a trained NN for the coastline detection through the ZED stereocamera inside a simulator's synthetic environment.
+This is a ROS package utilizing a trained CNN for coastline detection through a ZED stereo camera inside the UAV simulator synthetic environment presented in https://github.com/sotomotocross/UAV_simulator_ArduCopter.git
 
 
-## The ecatkin_ws
-This is a ROS workspace consisting of a set of packages running a trained NN for the coastline detection through the ZED stereocamera inside the simulator's synthetic environment.
-This ROS worskpace needs to be build and run using Python3. For this reason the user has to setup a python3 virtual environment and installing a set of dependencies inside.
-Also if you are an NVIDIA user then you have to check the CUDA versions, and cuDNN. Else you will be running the NN prediction on your CPU (either way the payload to the computer is heavy but GPU acceleration helps a lot).
+## The ROS workspace setup
+You have to create a separate catkin_ws to run the present package with the trained CNN. This ROS worskpace needs to be build and run using Python3. For this reason the user has to setup a python3 virtual environment and installing a set of dependencies inside. Also if you are an NVIDIA user then you have to check the CUDA versions, and cuDNN. Else you will be running the NN prediction on your CPU (either way the payload to the computer is heavy but GPU acceleration helps a lot).
 The basic dependencies for the python3 are installed using the bellow commands:
 ```
 $ cd ~
@@ -57,10 +55,10 @@ $ >>>
 ```
 If everything succesful you can check your python 3 virtual environment running the image-segmentation-keras tutorial (https://github.com/divamgupta/image-segmentation-keras) with the dataset given from the framework. It takes about 4-6 hours (depending on the PC's we have tested till this day) so you can leave at night. If all the predictions are ok then your python 3 virtual environment is ready for use.
 
-The setup of the ecatkin_ws ROS workspace will be given below.
+The setup of the ROS workspace will be given below.
 ```
-$ mkdir -p ~/ecatkins_ws/src
-$ cd ~/ecatkin_ws
+$ mkdir -p ~/image_seg_catkin_ws/src
+$ cd ~/image_seg_catkin_ws
 $ pip3 install numpy
 $ pip3 install scipy matplotlib pillow
 $ pip3 install imutils h5py==2.10.0 requests progressbar2
@@ -75,13 +73,22 @@ $ git clone -b melodic-devel https://github.com/ros/geometry2.git
 $ git clone https://github.com/ros-perception/image_common.git
 $ git clone https://github.com/amc-nu/RosImageFolderPublisher.git
 $ git clone -b melodic https://github.com/ros-perception/vision_opencv.git
+$ rosdep install --from-paths src --ignore-src -r -y
 $ catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
 ```
 Now you can move all the ecatkin_ws content from the repo to the src directory of the ecatkin_ws you just created and build.
 Then you execute the commands below:
 ```
-$ cd ~/ecatkin_ws
+$ cd ~/image_seg_catkin_ws
 $ rosdep install --from-paths src --ignore-src -r -y
 $ catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
 $ source devel/setup.bash
+```
+
+While the simulator is running you open a terminal and run the commands below that can start the trained NN for coastline detection running:
+```
+$ cd ~/image_seg_catkin_ws
+$  source devel/setup.bash
+$ source ~/anaconda3/etc/profile.d/conda.shconda activate tf-gpu-cuda10
+$ rosrun img_seg_cnn vgg_unet_predict.py
 ```
