@@ -55,12 +55,15 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  PREDdata.msg
-  POLYcalc_custom.msg
-  POLYcalc_custom_tf.msg
-  Optical_flow_custom.msg
+  # PREDdata.msg
+  # POLYcalc_custom.msg
+  # POLYcalc_custom_tf.msg
+  # Optical_flow_custom.msg
 #   Message1.msg
 #   Message2.msg
+  PolyCalcCustom.msg
+  PolyCalcCustomTF.msg
+  PredData.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -172,8 +175,8 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 # catkin_install_python(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  # scripts/detection
+  # DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
 ## Mark executables for installation
@@ -198,11 +201,24 @@ include_directories(
 # )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
-# install(FILES
-#   # myfile1
-#   # myfile2
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
+
+install(PROGRAMS
+  scripts/detection_node.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(DIRECTORY config
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(DIRECTORY src
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  PATTERN "*.py"
+)
 
 #############
 ## Testing ##

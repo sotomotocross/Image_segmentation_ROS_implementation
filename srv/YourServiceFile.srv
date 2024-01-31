@@ -1,0 +1,13 @@
+# YourServiceFile.srv
+# A simple service file for detection results
+
+# Request: Input image
+sensor_msgs/Image input_image
+
+# Response: Detection results
+---
+# Define your custom message for detection results here
+# For example:
+# float32 confidence
+# int32 class_id
+# geometry_msgs/Pose2D bounding_box

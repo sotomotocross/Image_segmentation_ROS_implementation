@@ -100,7 +100,6 @@ class image_converter:
         # print("Message uav velocity: ", self.vel_uav)
 
   # Function calling the feature transformation from the image plane on a virtual image plane
-
   def featuresTransformation(self, mp, phi, theta):
 
         Rphi = np.array([[1.0, 0.0, 0.0], [0.0, cos(phi), -sin(phi)],
@@ -215,7 +214,7 @@ class image_converter:
     except CvBridgeError as e:
       print(e)
 
-    (rows,cols,channels) = cv_image.shape
+    # (rows,cols,channels) = cv_image.shape
 
     def create_blank(width, height, rgb_color=(0, 0, 0)):
       # Create black blank image
@@ -643,19 +642,23 @@ class image_converter:
             self.polycalc_custom_tf.transformed_angle_deg = transformed_angle_deg
             self.polycalc_custom_tf.moments = moments
             
-            print("self.polycalc_custom_tf.transformed_features: ", self.polycalc_custom_tf.transformed_features)
-            print("self.polycalc_custom_tf.transformed_barycenter_features: ", self.polycalc_custom_tf.transformed_barycenter_features)
-            print("self.polycalc_custom_tf.d_transformed ", self.polycalc_custom_tf.d_transformed)
-            print("self.polycalc_custom_tf.f_transformed: ", self.polycalc_custom_tf.f_transformed)
+            # print("self.polycalc_custom_tf.transformed_features: ", self.polycalc_custom_tf.transformed_features)
+            # print("self.polycalc_custom_tf.transformed_barycenter_features: ", self.polycalc_custom_tf.transformed_barycenter_features)
+            # print("self.polycalc_custom_tf.d_transformed ", self.polycalc_custom_tf.d_transformed)
+            # print("self.polycalc_custom_tf.f_transformed: ", self.polycalc_custom_tf.f_transformed)
             
-            print("self.polycalc_custom_tf.transformed_sigma: ", self.polycalc_custom_tf.transformed_sigma)
-            print("self.polycalc_custom_tf.transformed_sigma_square: ", self.polycalc_custom_tf.transformed_sigma_square)
-            print("self.polycalc_custom_tf.transformed_sigma_square_log: ", self.polycalc_custom_tf.transformed_sigma_square_log)
+            # print("self.polycalc_custom_tf.transformed_sigma: ", self.polycalc_custom_tf.transformed_sigma)
+            # print("self.polycalc_custom_tf.transformed_sigma_square: ", self.polycalc_custom_tf.transformed_sigma_square)
+            # print("self.polycalc_custom_tf.transformed_sigma_square_log: ", self.polycalc_custom_tf.transformed_sigma_square_log)
             
-            print("self.polycalc_custom_tf.transformed_tangent: ", self.polycalc_custom_tf.transformed_tangent)
-            print("self.polycalc_custom_tf.transformed_angle_radian: ", self.polycalc_custom_tf.transformed_angle_radian)
-            print("self.polycalc_custom_tf.transformed_angle_deg: ", self.polycalc_custom_tf.transformed_angle_deg)
-            print("self.polycalc_custom_tf.moments = ", self.polycalc_custom_tf.moments)
+            # print("self.polycalc_custom_tf.transformed_tangent: ", self.polycalc_custom_tf.transformed_tangent)
+            # print("self.polycalc_custom_tf.transformed_angle_radian: ", self.polycalc_custom_tf.transformed_angle_radian)
+            # print("self.polycalc_custom_tf.transformed_angle_deg: ", self.polycalc_custom_tf.transformed_angle_deg)
+            # print("self.polycalc_custom_tf.moments = ", self.polycalc_custom_tf.moments)
+            
+            # print("self.polycalc_custom_tf.transformed_features.shape = ", self.polycalc_custom_tf.transformed_features.shape)
+            # print("self.polycalc_custom_tf.transformed_features.size = ", self.polycalc_custom_tf.transformed_features.size)
+            # print("\n")
             
             self.pub_polycalc_custom_tf.publish(self.polycalc_custom_tf)
             # ------------------------------------------------------------------------------------------------
@@ -663,8 +666,8 @@ class image_converter:
             
             # print("\n")
             
-            # cv2.imshow("Combined prediction", combo_image)
-            # cv2.imshow("Prediction image window", segimg) 
+            cv2.imshow("Combined prediction", combo_image)
+            cv2.imshow("Prediction image window", segimg) 
             # cv2.imshow("Bounded contour image", ros_image) 
             cv2.waitKey(3)
 
@@ -701,7 +704,8 @@ def main(args):
     try:
       tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
       tf.config.experimental.set_virtual_device_configuration( gpus[0],
-                                                              [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=500)])
+                                                              [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=2500)])
+      # tf.config.experimental.set_virtual_device_configuration( gpus[0])
       logical_gpus = tf.config.experimental.list_logical_devices('GPU')
       print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPU \n")
     except RuntimeError as e:

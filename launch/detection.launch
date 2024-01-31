@@ -1,0 +1,11 @@
+<!-- detection.launch -->
+
+<launch>
+
+  <!-- Start the ROS node -->
+  <node name="img_seg_cnn_node" pkg="img_seg_cnn" type="detection_node.py" output="screen">
+      <param name="model_checkpoint_path" value="$(find img_seg_cnn)/model_checkpoints/mobilenet_segnet/mobilenet_segnet224" />
+    <!-- Add any necessary parameters or arguments here -->
+  </node>
+
+</launch>
